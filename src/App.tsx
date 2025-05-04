@@ -1,21 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Button, createTheme, MantineProvider } from '@mantine/core';
 
-const theme = createTheme({
-  fontFamily: 'Open Sans, sans-serif',
-  primaryColor: 'violet',
-});
+import { useDisclosure } from '@mantine/hooks';
+import { Button, Flex, AppShell, Burger, Paper, ActionIcon, Text } from '@mantine/core';
+import Budget from './components/Budget';
+
+
 
 function App() {
+ const [opened, { toggle }] = useDisclosure();
+ 
   return (
-    <MantineProvider theme={theme}>
-      <div className="App">
-        <p>Welcome to the Budget App</p>
-        <Button>Create New Budget</Button>
-      </div>
-    </MantineProvider>
+    <AppShell
+      header = {{height: 60}}
+      navbar = {{width: 300, breakpoint: 'sm', collapsed: {desktop: !opened, mobile: !opened}}}
+      padding = "md">
+      <AppShell.Header>
+        <Flex justify="space-between" align="center" style={{padding: '10px 20px'}}>
+          <Burger opened={opened} onClick={toggle} />
+          <Text>Budgeting Tool</Text>
+        </Flex>
+      </AppShell.Header>
+      <AppShell.Navbar p="md">
+        Navbar
+      </AppShell.Navbar>
+      <AppShell.Main><Budget/></AppShell.Main>
+    </AppShell>
+    
   );
 }
 
